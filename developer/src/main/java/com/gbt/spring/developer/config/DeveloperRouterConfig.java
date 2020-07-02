@@ -1,14 +1,13 @@
 package com.gbt.spring.developer.config;
 
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import com.gbt.spring.developer.model.Developer;
-import com.gbt.spring.developer.repository.DeveloperRepository;
+import com.gbt.spring.developer.handler.DeveloperHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class DeveloperRouterConfig {
 
 	@Bean
-	RouterFunction<ServerResponse> developerSearchRoutes(final DeveloperRepository developerRepository) {
-		log.info("Setting up developer search routes");
+	RouterFunction<ServerResponse> developerRoutes(final DeveloperHandler developerHandler) {
+		log.info("Setting up developer routes");
 
-		return route()
-				.GET("/developers", request -> ServerResponse.ok().body(developerRepository.findAll(), Developer.class))
-				.build();
+		return RouterFunctions.route(RequestPredicates.GET("/developer"), developerHandler::findAll)
+				.andRoute(RequestPredicates.GET("/developer/search/name/{name}"), developerHandler::searchByName)
+				.andRoute(RequestPredicates.GET("/developer/{id}"), developerHandler::findById)
+				.andRoute(RequestPredicates.POST("/developer"), developerHandler::save);
 	}
+
 }
