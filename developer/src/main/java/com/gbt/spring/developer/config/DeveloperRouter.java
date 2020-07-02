@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-public class DeveloperRouterConfig {
+public class DeveloperRouter {
 
 	@Bean
 	RouterFunction<ServerResponse> developerRoutes(final DeveloperHandler developerHandler) {

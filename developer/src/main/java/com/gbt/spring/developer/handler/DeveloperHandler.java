@@ -21,6 +21,7 @@ public class DeveloperHandler {
 	private final DeveloperRepository developerRepository;
 
 	public Mono<ServerResponse> save(final ServerRequest request) {
+		log.info("saving a developer");
 		Mono<Developer> developer = request.body(BodyExtractors.toMono(Developer.class))
 				.flatMap(developerRepository::save);
 		return ServerResponse.ok().body(BodyInserters.fromPublisher(developer, Developer.class));

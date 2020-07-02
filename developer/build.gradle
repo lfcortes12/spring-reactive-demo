@@ -35,6 +35,8 @@ dependencies {
 	}
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.awaitility:awaitility:4.0.3'
+	testImplementation 'org.testcontainers:testcontainers:1.14.3'
+	testImplementation 'org.testcontainers:mongodb:1.14.3'
 	//to check possible blocking operations
 	implementation 'io.projectreactor.tools:blockhound:1.0.3.RELEASE'
 }
